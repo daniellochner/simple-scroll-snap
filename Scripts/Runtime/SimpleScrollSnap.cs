@@ -64,6 +64,8 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         public int TargetPanel { get; set; }
         public int NearestPanel { get; set; }
 
+        private RectTransform[] PanelsRT
+        { get; set; }
         public GameObject[] Panels { get; set; }
         public Toggle[] Toggles { get; set; }
 
@@ -108,7 +110,9 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         private void Awake()
         {
             Initialize();
-
+        }
+        private void Start()
+        {
             if (Validate())
             {
                 Setup();
@@ -238,25 +242,26 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             size = (sizeControl == SizeControl.Manual) ? size : new Vector2(GetComponent<RectTransform>().rect.width, GetComponent<RectTransform>().rect.height);
 
             Panels = new GameObject[NumberOfPanels];
+            PanelsRT = new RectTransform[NumberOfPanels];
             for (int i = 0; i < NumberOfPanels; i++)
             {
                 Panels[i] = Content.GetChild(i).gameObject;
-                RectTransform panelRectTransform = Panels[i].GetComponent<RectTransform>();
+                PanelsRT[i] = Panels[i].GetComponent<RectTransform>();
 
                 if (movementType == MovementType.Fixed && automaticallyLayout)
                 {
-                    panelRectTransform.anchorMin = new Vector2(movementAxis == MovementAxis.Horizontal ? 0f : 0.5f, movementAxis == MovementAxis.Vertical ? 0f : 0.5f);
-                    panelRectTransform.anchorMax = new Vector2(movementAxis == MovementAxis.Horizontal ? 0f : 0.5f, movementAxis == MovementAxis.Vertical ? 0f : 0.5f);
+                    PanelsRT[i].anchorMin = new Vector2(movementAxis == MovementAxis.Horizontal ? 0f : 0.5f, movementAxis == MovementAxis.Vertical ? 0f : 0.5f);
+                    PanelsRT[i].anchorMax = new Vector2(movementAxis == MovementAxis.Horizontal ? 0f : 0.5f, movementAxis == MovementAxis.Vertical ? 0f : 0.5f);
 
                     float x = (rightMargin + leftMargin) / 2f - leftMargin;
                     float y = (topMargin + bottomMargin) / 2f - bottomMargin;
                     Vector2 marginOffset = new Vector2(x / size.x, y / size.y);
-                    panelRectTransform.pivot = new Vector2(0.5f, 0.5f) + marginOffset;
-                    panelRectTransform.sizeDelta = size - new Vector2(leftMargin + rightMargin, topMargin + bottomMargin);
+                    PanelsRT[i].pivot = new Vector2(0.5f, 0.5f) + marginOffset;
+                    PanelsRT[i].sizeDelta = size - new Vector2(leftMargin + rightMargin, topMargin + bottomMargin);
 
                     float panelPosX = (movementAxis == MovementAxis.Horizontal) ? i * (automaticLayoutSpacing + 1f) * size.x + (size.x / 2f) : 0f;
                     float panelPosY = (movementAxis == MovementAxis.Vertical) ? i * (automaticLayoutSpacing + 1f) * size.y + (size.y / 2f) : 0f;
-                    panelRectTransform.anchoredPosition = new Vector2(panelPosX, panelPosY);
+                    PanelsRT[i].anchoredPosition = new Vector2(panelPosX, panelPosY);
                 }
             }
 
@@ -462,11 +467,11 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 
                         if (horizontalProjection > contentSize.x / 2f)
                         {
-                            Panels[i].transform.position -= contentSize.x * transform.right;
+                            PanelsRT[i].anchoredPosition -= new Vector2(contentSize.x, 0);
                         }
                         else if (horizontalProjection < -1f * contentSize.x / 2f)
                         {
-                            Panels[i].transform.position += contentSize.x * transform.right;
+                            PanelsRT[i].anchoredPosition += new Vector2(contentSize.x, 0);
                         }
                     }
                 }
@@ -478,11 +483,11 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 
                         if (verticalProjection > contentSize.y / 2f)
                         {
-                            Panels[i].transform.position -= contentSize.y * transform.up;
+                            PanelsRT[i].anchoredPosition -= new Vector2(0, contentSize.y);
                         }
                         else if (verticalProjection < -1f * contentSize.y / 2f)
                         {
-                            Panels[i].transform.position += contentSize.y * transform.up;
+                            PanelsRT[i].anchoredPosition += new Vector2(0, contentSize.y);
                         }
                     }
                 }
