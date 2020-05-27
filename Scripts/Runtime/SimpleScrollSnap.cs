@@ -1,5 +1,5 @@
 ﻿// Simple Scroll-Snap - https://assetstore.unity.com/packages/tools/gui/simple-scroll-snap-140884
-// Version: 1.1.7
+// Version: 1.1.8
 // Author: Daniel Lochner
 
 using System;
@@ -36,6 +36,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         public float snappingSpeed = 10f;
         public float thresholdSnappingSpeed = -1f;
         public bool hardSnap = true;
+        public bool useUnscaledTime = false;
         public UnityEvent onPanelChanged, onPanelSelecting, onPanelSelected, onPanelChanging;
         public List<TransitionEffect> transitionEffects = new List<TransitionEffect>();
 
@@ -415,7 +416,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             Vector2 offset = new Vector2(xOffset, yOffset);
 
             Vector2 targetPosition = -PanelsRT[TargetPanel].anchoredPosition + offset;
-            Content.anchoredPosition = Vector2.Lerp(Content.anchoredPosition, targetPosition, Time.deltaTime * snappingSpeed);
+            Content.anchoredPosition = Vector2.Lerp(Content.anchoredPosition, targetPosition, (useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime) * snappingSpeed);
 
             if (CurrentPanel != TargetPanel)
             {

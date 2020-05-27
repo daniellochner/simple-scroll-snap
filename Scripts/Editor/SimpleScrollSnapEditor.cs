@@ -1,5 +1,5 @@
 ﻿// Simple Scroll-Snap - https://assetstore.unity.com/packages/tools/gui/simple-scroll-snap-140884
-// Version: 1.1.7
+// Version: 1.1.8
 // Author: Daniel Lochner
 
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         private int selectedProperty;
         private float selectedMinValue, selectedMaxValue, selectedMinDisplacement, selectedMaxDisplacement;
         private bool showTransitionEffects = true, showMovement = true, showMargin = true, showNavigation = true, showSelection = true, showEvents = true, showDisplacement, showValue;
-        private SerializedProperty movementType, movementAxis, automaticallyLayout, sizeControl, size, automaticLayoutSpacing, leftMargin, rightMargin, topMargin, bottomMargin, infinitelyScroll, infiniteScrollingEndSpacing, startingPanel, swipeGestures, minimumSwipeSpeed, previousButton, nextButton, pagination, toggleNavigation, snapTarget, snappingSpeed, thresholdSnappingSpeed, hardSnap, onPanelSelecting, onPanelSelected, onPanelChanging, onPanelChanged;
+        private SerializedProperty movementType, movementAxis, automaticallyLayout, sizeControl, size, automaticLayoutSpacing, leftMargin, rightMargin, topMargin, bottomMargin, infinitelyScroll, infiniteScrollingEndSpacing, startingPanel, swipeGestures, minimumSwipeSpeed, previousButton, nextButton, pagination, toggleNavigation, snapTarget, snappingSpeed, useUnscaledTime, thresholdSnappingSpeed, hardSnap, onPanelSelecting, onPanelSelected, onPanelChanging, onPanelChanged;
         private SimpleScrollSnap simpleScrollSnap;
         private AnimationCurve selectedFunction = AnimationCurve.Constant(0, 1, 1);
         #endregion
@@ -51,6 +51,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             snappingSpeed = serializedObject.FindProperty("snappingSpeed");
             thresholdSnappingSpeed = serializedObject.FindProperty("thresholdSnappingSpeed");
             hardSnap = serializedObject.FindProperty("hardSnap");
+            useUnscaledTime = serializedObject.FindProperty("useUnscaledTime");
             onPanelSelecting = serializedObject.FindProperty("onPanelSelecting");
             onPanelSelected = serializedObject.FindProperty("onPanelSelected");
             onPanelChanging = serializedObject.FindProperty("onPanelChanging");
@@ -75,7 +76,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         {
             GUILayout.BeginVertical("HelpBox");
             GUILayout.Label("Simple Scroll-Snap", new GUIStyle() { fontSize = 30, alignment = TextAnchor.MiddleCenter });
-            GUILayout.Label("Version: 1.1.7", new GUIStyle() { fontSize = 14, alignment = TextAnchor.MiddleCenter });
+            GUILayout.Label("Version: 1.1.8", new GUIStyle() { fontSize = 14, alignment = TextAnchor.MiddleCenter });
             GUILayout.Label("Author: Daniel Lochner", new GUIStyle() { fontSize = 14, alignment = TextAnchor.MiddleCenter });
             GUILayout.EndVertical();
         }
@@ -87,7 +88,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             EditorStyles.foldout.fontStyle = FontStyle.Bold;
             showMovement = EditorGUILayout.Foldout(showMovement, "Movement and Layout Settings", true);
             EditorStyles.foldout.fontStyle = FontStyle.Normal;
-            
+
             if (showMovement)
             {
                 MovementType();
@@ -218,6 +219,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 SnapSpeed();
                 ThresholdSnapSpeed();
                 HardSnap();
+                UseUnscaledTime();
             }
 
             EditorGUILayout.Space();
@@ -244,6 +246,10 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         private void HardSnap()
         {
             EditorGUILayout.PropertyField(hardSnap, new GUIContent("Hard Snap", "Should the inertia of the ScrollRect be disabled once a panel has been selected? If enabled, the ScrollRect will not overshoot the targeted panel when snapping into position and instead Lerp precisely towards the targeted panel."));
+        }
+        private void UseUnscaledTime()
+        {
+            EditorGUILayout.PropertyField(useUnscaledTime, new GUIContent("Use Unscaled Time", "Should the scroll-snap update irrespective of the time scale?"));
         }
 
         private void TransitionEffects()
@@ -324,7 +330,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         private void InitTransitionEffects()
         {
             // Initialize
-            for(int i = 0; i < simpleScrollSnap.transitionEffects.Count; i++)
+            for (int i = 0; i < simpleScrollSnap.transitionEffects.Count; i++)
             {
                 simpleScrollSnap.transitionEffects[i].Init();
             }
@@ -350,7 +356,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         {
             // Canvas
             Canvas canvas = FindObjectOfType<Canvas>();
-            if(canvas == null)
+            if (canvas == null)
             {
                 GameObject canvasObject = new GameObject("Canvas");
                 canvas = canvasObject.AddComponent<Canvas>();
