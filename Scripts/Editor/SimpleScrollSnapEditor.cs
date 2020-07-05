@@ -1,5 +1,5 @@
 ﻿// Simple Scroll-Snap - https://assetstore.unity.com/packages/tools/gui/simple-scroll-snap-140884
-// Version: 1.1.8
+// Version: 1.2.0
 // Author: Daniel Lochner
 
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         private int selectedProperty;
         private float selectedMinValue, selectedMaxValue, selectedMinDisplacement, selectedMaxDisplacement;
         private bool showTransitionEffects = true, showMovement = true, showMargin = true, showNavigation = true, showSelection = true, showEvents = true, showDisplacement, showValue;
-        private SerializedProperty movementType, movementAxis, automaticallyLayout, sizeControl, size, automaticLayoutSpacing, leftMargin, rightMargin, topMargin, bottomMargin, infinitelyScroll, infiniteScrollingEndSpacing, startingPanel, swipeGestures, minimumSwipeSpeed, previousButton, nextButton, pagination, toggleNavigation, snapTarget, snappingSpeed, useUnscaledTime, thresholdSnappingSpeed, hardSnap, onPanelSelecting, onPanelSelected, onPanelChanging, onPanelChanged;
+        private SerializedProperty movementType, movementAxis, automaticallyLayout, sizeControl, size, automaticLayoutSpacing, leftMargin, rightMargin, topMargin, bottomMargin, infinitelyScroll, infiniteScrollingEndSpacing, startingPanel, swipeGestures, minimumSwipeSpeed, previousButton, nextButton, pagination, toggleNavigation, snapTarget, snappingSpeed, useUnscaledTime, useOcclusionCulling, thresholdSnappingSpeed, hardSnap, onPanelSelecting, onPanelSelected, onPanelChanging, onPanelChanged;
         private SimpleScrollSnap simpleScrollSnap;
         private AnimationCurve selectedFunction = AnimationCurve.Constant(0, 1, 1);
         #endregion
@@ -39,6 +39,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             topMargin = serializedObject.FindProperty("topMargin");
             bottomMargin = serializedObject.FindProperty("bottomMargin");
             infinitelyScroll = serializedObject.FindProperty("infinitelyScroll");
+            useOcclusionCulling = serializedObject.FindProperty("useOcclusionCulling");
             infiniteScrollingEndSpacing = serializedObject.FindProperty("infiniteScrollingEndSpacing");
             startingPanel = serializedObject.FindProperty("startingPanel");
             swipeGestures = serializedObject.FindProperty("swipeGestures");
@@ -76,7 +77,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         {
             GUILayout.BeginVertical("HelpBox");
             GUILayout.Label("Simple Scroll-Snap", new GUIStyle() { fontSize = 30, alignment = TextAnchor.MiddleCenter });
-            GUILayout.Label("Version: 1.1.8", new GUIStyle() { fontSize = 14, alignment = TextAnchor.MiddleCenter });
+            GUILayout.Label("Version: 1.2.0", new GUIStyle() { fontSize = 14, alignment = TextAnchor.MiddleCenter });
             GUILayout.Label("Author: Daniel Lochner", new GUIStyle() { fontSize = 14, alignment = TextAnchor.MiddleCenter });
             GUILayout.EndVertical();
         }
@@ -107,6 +108,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 MovementAxis();
                 AutomaticLayout();
                 InfiniteScrolling();
+                UseOcclusionCulling();
 
                 EditorGUI.indentLevel--;
             }
@@ -151,6 +153,10 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 EditorGUILayout.Slider(infiniteScrollingEndSpacing, 0, 1, new GUIContent("End Spacing", "The spacing maintained between panels once wrapped around to the opposite end."));
                 EditorGUI.indentLevel--;
             }
+        }
+        private void UseOcclusionCulling()
+        {
+            EditorGUILayout.PropertyField(useOcclusionCulling, new GUIContent("Use Occlusion Culling", "Should panels not visible in the viewport be disabled?"));
         }
         private void StartingPanel()
         {

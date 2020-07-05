@@ -1,5 +1,5 @@
 ﻿// Simple Scroll-Snap
-// Version: 1.1.2
+// Version: 1.2.0
 // Author: Daniel Lochner
 
 using System;
@@ -22,7 +22,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         private void Awake()
         {
             sss = GetComponent<SimpleScrollSnap>();
-            toggleWidth = toggle.GetComponent<RectTransform>().sizeDelta.x;
+            toggleWidth = toggle.GetComponent<RectTransform>().sizeDelta.x * (Screen.width / 2048f); ;
         }
 
         public void AddToFront()
@@ -41,7 +41,6 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         private void Add(int index)
         {
             //Pagination
-            float toggleWidth = toggle.GetComponent<RectTransform>().sizeDelta.x;
             Instantiate(toggle, sss.pagination.transform.position + new Vector3(toggleWidth * (sss.NumberOfPanels + 1), 0, 0), Quaternion.identity, sss.pagination.transform);
             sss.pagination.transform.position -= new Vector3(toggleWidth / 2f, 0, 0);
 
