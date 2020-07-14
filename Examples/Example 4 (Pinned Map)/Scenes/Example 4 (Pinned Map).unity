@@ -830,7 +830,7 @@ PrefabInstance:
     - target: {fileID: 224276557775416348, guid: 3d30fc81a27caa84c9de252c6b4f5da5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 471.6
+      value: 471.59998
       objectReference: {fileID: 0}
     - target: {fileID: 224276557775416348, guid: 3d30fc81a27caa84c9de252c6b4f5da5,
         type: 3}
@@ -2027,6 +2027,7 @@ MonoBehaviour:
   bottomMargin: 0
   infinitelyScroll: 0
   infiniteScrollingEndSpacing: 0
+  useOcclusionCulling: 0
   startingPanel: 6
   swipeGestures: 1
   minimumSwipeSpeed: 0
@@ -2038,6 +2039,7 @@ MonoBehaviour:
   snappingSpeed: 10
   thresholdSnappingSpeed: 10
   hardSnap: 1
+  useUnscaledTime: 0
   onPanelChanged:
     m_PersistentCalls:
       m_Calls: []

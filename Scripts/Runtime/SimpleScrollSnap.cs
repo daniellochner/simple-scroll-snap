@@ -293,6 +293,10 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                     OnOcclusionCulling(true);
                 }
             }
+            else
+            {
+                automaticallyLayout = infinitelyScroll = useOcclusionCulling = false;
+            }
 
             // Starting Panel
             float xOffset = (movementAxis == MovementAxis.Horizontal || movementType == MovementType.Free) ? Viewport.rect.width / 2f : 0f;
@@ -342,7 +346,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 
         private Vector2 DisplacementFromCenter(int index)
         {
-            return PanelsRT[index].anchoredPosition + Content.anchoredPosition - (Viewport.rect.size / 2f);
+            return PanelsRT[index].anchoredPosition + Content.anchoredPosition - new Vector2(Viewport.rect.width * (0.5f - Content.anchorMin.x), Viewport.rect.height * (0.5f - Content.anchorMin.y));
         }
         private int DetermineNearestPanel()
         {

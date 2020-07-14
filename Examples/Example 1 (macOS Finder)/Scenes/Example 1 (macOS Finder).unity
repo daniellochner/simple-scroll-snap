@@ -2701,6 +2701,7 @@ MonoBehaviour:
   bottomMargin: 0
   infinitelyScroll: 1
   infiniteScrollingEndSpacing: 0.1
+  useOcclusionCulling: 0
   startingPanel: 0
   swipeGestures: 1
   minimumSwipeSpeed: 0

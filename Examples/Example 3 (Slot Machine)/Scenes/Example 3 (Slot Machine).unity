@@ -610,6 +610,11 @@ PrefabInstance:
       propertyPath: automaticallyLayout
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114447995284816560, guid: 384a18d8acb249c44900d2ab0d59e7e2,
+        type: 3}
+      propertyPath: useOcclusionCulling
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 224520028516023490, guid: 384a18d8acb249c44900d2ab0d59e7e2,
         type: 3}
       propertyPath: m_LocalPosition.x
