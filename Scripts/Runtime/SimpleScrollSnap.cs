@@ -45,6 +45,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         private float releaseSpeed, contentLength;
         private Direction releaseDirection;
         private Graphic[] graphics;
+        private Dictionary<RectTransform, Graphic[]> graphicsByPanel;
         private Canvas canvas;
         private RectTransform canvasRectTransform;
         private CanvasScaler canvasScaler;
@@ -342,6 +343,32 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                     }
                 }
             }
+
+            //Graphics Cache
+            if (transitionEffects.Count > 0)
+            {
+                graphicsByPanel = new Dictionary<RectTransform, Graphic[]>();
+                for (int i = 0; i < NumberOfPanels; i++)
+                {
+                    RectTransform panel = PanelsRT[i];
+                    foreach (TransitionEffect transitionEffect in transitionEffects)
+                    {
+                        if (!graphicsByPanel.ContainsKey(panel))
+                        {
+                            switch (transitionEffect.Label)
+                            {
+                                case "color.r":
+                                case "color.g":
+                                case "color.b":
+                                case "color.a":
+                                    graphics = panel.GetComponentsInChildren<Graphic>();
+                                    graphicsByPanel.Add(panel, graphics);
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private Vector2 DisplacementFromCenter(int index)
@@ -553,28 +580,28 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                             panel.transform.localRotation = Quaternion.Euler(new Vector3(panel.transform.localEulerAngles.x, panel.transform.localEulerAngles.y, transitionEffect.GetValue(displacement)));
                             break;
                         case "color.r":
-                            graphics = panel.GetComponentsInChildren<Graphic>();
+                            graphics = graphicsByPanel.ContainsKey(panel) ? graphicsByPanel[panel] : panel.GetComponentsInChildren<Graphic>();
                             foreach (Graphic graphic in graphics)
                             {
                                 graphic.color = new Color(transitionEffect.GetValue(displacement), graphic.color.g, graphic.color.b, graphic.color.a);
                             }
                             break;
                         case "color.g":
-                            graphics = panel.GetComponentsInChildren<Graphic>();
+                            graphics = graphicsByPanel.ContainsKey(panel) ? graphicsByPanel[panel] : panel.GetComponentsInChildren<Graphic>();
                             foreach (Graphic graphic in graphics)
                             {
                                 graphic.color = new Color(graphic.color.r, transitionEffect.GetValue(displacement), graphic.color.b, graphic.color.a);
                             }
                             break;
                         case "color.b":
-                            graphics = panel.GetComponentsInChildren<Graphic>();
+                            graphics = graphicsByPanel.ContainsKey(panel) ? graphicsByPanel[panel] : panel.GetComponentsInChildren<Graphic>();
                             foreach (Graphic graphic in graphics)
                             {
                                 graphic.color = new Color(graphic.color.r, graphic.color.g, transitionEffect.GetValue(displacement), graphic.color.a);
                             }
                             break;
                         case "color.a":
-                            graphics = panel.GetComponentsInChildren<Graphic>();
+                            graphics = graphicsByPanel.ContainsKey(panel) ? graphicsByPanel[panel] : panel.GetComponentsInChildren<Graphic>();
                             foreach (Graphic graphic in graphics)
                             {
                                 graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, transitionEffect.GetValue(displacement));
