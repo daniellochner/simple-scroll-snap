@@ -1,5 +1,5 @@
 ﻿// Simple Scroll-Snap - https://assetstore.unity.com/packages/tools/gui/simple-scroll-snap-140884
-// Version: 1.2.0
+// Version: 1.2.1
 // Author: Daniel Lochner
 
 using System.Collections.Generic;
@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static DanielLochner.Assets.SimpleScrollSnap.SimpleScrollSnap;
 
 namespace DanielLochner.Assets.SimpleScrollSnap
 {
@@ -77,7 +78,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         {
             GUILayout.BeginVertical("HelpBox");
             GUILayout.Label("Simple Scroll-Snap", new GUIStyle() { fontSize = 30, alignment = TextAnchor.MiddleCenter });
-            GUILayout.Label("Version: 1.2.0", new GUIStyle() { fontSize = 14, alignment = TextAnchor.MiddleCenter });
+            GUILayout.Label("Version: 1.2.1", new GUIStyle() { fontSize = 14, alignment = TextAnchor.MiddleCenter });
             GUILayout.Label("Author: Daniel Lochner", new GUIStyle() { fontSize = 14, alignment = TextAnchor.MiddleCenter });
             GUILayout.EndVertical();
         }

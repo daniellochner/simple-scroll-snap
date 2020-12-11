@@ -1,9 +1,10 @@
 ﻿// Simple Scroll-Snap - https://assetstore.unity.com/packages/tools/gui/simple-scroll-snap-140884
-// Version: 1.2.0
+// Version: 1.2.1
 // Author: Daniel Lochner
 
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -44,12 +45,12 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         private bool dragging, selected = true, pressing;
         private float releaseSpeed, contentLength;
         private Direction releaseDirection;
-        private Graphic[] graphics;
         private Canvas canvas;
         private RectTransform canvasRectTransform;
         private CanvasScaler canvasScaler;
         private ScrollRect scrollRect;
         private Vector2 previousContentAnchoredPosition, velocity;
+        private Dictionary<int, Graphic[]> panelGraphics = new Dictionary<int, Graphic[]>();
         #endregion
 
         #region Properties
@@ -193,6 +194,12 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             {
                 canvasScaler = canvas.GetComponentInParent<CanvasScaler>();
                 canvasRectTransform = canvas.GetComponent<RectTransform>();
+            }
+
+            panelGraphics = new Dictionary<int, Graphic[]>();
+            for (int i = 0; i < Content.childCount; i++)
+            {
+                panelGraphics.Add(i, Content.GetChild(i).GetComponentsInChildren<Graphic>());
             }
         }
         private bool Validate()
@@ -553,29 +560,25 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                             panel.transform.localRotation = Quaternion.Euler(new Vector3(panel.transform.localEulerAngles.x, panel.transform.localEulerAngles.y, transitionEffect.GetValue(displacement)));
                             break;
                         case "color.r":
-                            graphics = panel.GetComponentsInChildren<Graphic>();
-                            foreach (Graphic graphic in graphics)
+                            foreach (Graphic graphic in panelGraphics[i])
                             {
                                 graphic.color = new Color(transitionEffect.GetValue(displacement), graphic.color.g, graphic.color.b, graphic.color.a);
                             }
                             break;
                         case "color.g":
-                            graphics = panel.GetComponentsInChildren<Graphic>();
-                            foreach (Graphic graphic in graphics)
+                            foreach (Graphic graphic in panelGraphics[i])
                             {
                                 graphic.color = new Color(graphic.color.r, transitionEffect.GetValue(displacement), graphic.color.b, graphic.color.a);
                             }
                             break;
                         case "color.b":
-                            graphics = panel.GetComponentsInChildren<Graphic>();
-                            foreach (Graphic graphic in graphics)
+                            foreach (Graphic graphic in panelGraphics[i])
                             {
                                 graphic.color = new Color(graphic.color.r, graphic.color.g, transitionEffect.GetValue(displacement), graphic.color.a);
                             }
                             break;
                         case "color.a":
-                            graphics = panel.GetComponentsInChildren<Graphic>();
-                            foreach (Graphic graphic in graphics)
+                            foreach (Graphic graphic in panelGraphics[i])
                             {
                                 graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, transitionEffect.GetValue(displacement));
                             }
@@ -683,6 +686,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             panel = Instantiate(panel, Content, false);
             panel.transform.SetSiblingIndex(index);
 
+            Initialize();
             if (Validate())
             {
                 if (TargetPanel <= index)
@@ -732,6 +736,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 
             DestroyImmediate(Panels[index]);
 
+            Initialize();
             if (Validate())
             {
                 if (TargetPanel == index)
@@ -762,6 +767,147 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             scrollRect.velocity += velocity;
             selected = false;
         }
+        #endregion
+
+        #region Inner Classes
+        [Serializable] public class TransitionEffect
+        {
+            #region Fields
+            [SerializeField] protected float minDisplacement, maxDisplacement, minValue, maxValue, defaultMinValue, defaultMaxValue, defaultMinDisplacement, defaultMaxDisplacement;
+            [SerializeField] protected bool showPanel, showDisplacement, showValue;
+            [SerializeField] private string label;
+            [SerializeField] private AnimationCurve function;
+            [SerializeField] private AnimationCurve defaultFunction;
+            [SerializeField] private SimpleScrollSnap simpleScrollSnap;
+            #endregion
+
+            #region Properties
+            public string Label
+            {
+                get { return label; }
+                set { label = value; }
+            }
+            public float MinValue
+            {
+                get { return MinValue; }
+                set { minValue = value; }
+            }
+            public float MaxValue
+            {
+                get { return maxValue; }
+                set { maxValue = value; }
+            }
+            public float MinDisplacement
+            {
+                get { return minDisplacement; }
+                set { minDisplacement = value; }
+            }
+            public float MaxDisplacement
+            {
+                get { return maxDisplacement; }
+                set { maxDisplacement = value; }
+            }
+            public AnimationCurve Function
+            {
+                get { return function; }
+                set { function = value; }
+            }
+            #endregion
+
+            #region Methods
+            public TransitionEffect(string label, float minValue, float maxValue, float minDisplacement, float maxDisplacement, AnimationCurve function, SimpleScrollSnap simpleScrollSnap)
+            {
+                this.label = label;
+                this.simpleScrollSnap = simpleScrollSnap;
+                this.minValue = minValue;
+                this.maxValue = maxValue;
+                this.minDisplacement = minDisplacement;
+                this.maxDisplacement = maxDisplacement;
+                this.function = function;
+
+                SetDefaultValues(minValue, maxValue, minDisplacement, maxDisplacement, function);
+                #if UNITY_EDITOR
+                UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(UnityEngine.SceneManagement.SceneManager.GetActiveScene());
+                #endif
+            }
+
+            private void SetDefaultValues(float minValue, float maxValue, float minDisplacement, float maxDisplacement, AnimationCurve function)
+            {
+                defaultMinValue = minValue;
+                defaultMaxValue = maxValue;
+                defaultMinDisplacement = minDisplacement;
+                defaultMaxDisplacement = maxDisplacement;
+                defaultFunction = function;
+            }
+            #if UNITY_EDITOR
+            public void Init()
+            {
+                GUILayout.BeginVertical("HelpBox");
+                showPanel = EditorGUILayout.Foldout(showPanel, label, true);
+                if (showPanel)
+                {
+                    EditorGUI.indentLevel++;
+                    float x = minDisplacement;
+                    float y = minValue;
+                    float width = maxDisplacement - minDisplacement;
+                    float height = maxValue - minValue;
+
+                    // Min/Max Values
+                    showValue = EditorGUILayout.Foldout(showValue, "Value", true);
+                    if (showValue)
+                    {
+                        EditorGUI.indentLevel++;
+                        minValue = EditorGUILayout.FloatField(new GUIContent("Min"), minValue);
+                        maxValue = EditorGUILayout.FloatField(new GUIContent("Max"), maxValue);
+                        EditorGUI.indentLevel--;
+                    }
+
+                    // Min/Max Displacements
+                    showDisplacement = EditorGUILayout.Foldout(showDisplacement, "Displacement", true);
+                    if (showDisplacement)
+                    {
+                        EditorGUI.indentLevel++;
+                        minDisplacement = EditorGUILayout.FloatField(new GUIContent("Min"), minDisplacement);
+                        maxDisplacement = EditorGUILayout.FloatField(new GUIContent("Max"), maxDisplacement);
+                        EditorGUI.indentLevel--;
+                    }
+
+                    // Function
+                    function = EditorGUILayout.CurveField("Function", function, Color.white, new Rect(x, y, width, height));
+
+                    // Reset
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Space(EditorGUI.indentLevel * 16);
+                    if (GUILayout.Button("Reset"))
+                    {
+                        Reset();
+                    }
+
+                    // Remove
+                    if (GUILayout.Button("Remove"))
+                    {
+                        simpleScrollSnap.transitionEffects.Remove(this);
+                    }
+                    GUILayout.EndHorizontal();
+                    EditorGUI.indentLevel--;
+                }
+                GUILayout.EndVertical();
+            }
+            #endif
+            public void Reset()
+            {
+                minValue = defaultMinValue;
+                maxValue = defaultMaxValue;
+                minDisplacement = defaultMinDisplacement;
+                maxDisplacement = defaultMaxDisplacement;
+                function = defaultFunction;
+            }
+            public float GetValue(float displacement)
+            {
+                return (function != null) ? function.Evaluate(displacement) : 0f;
+            }
+            #endregion
+        }
+        #endregion
     }
-    #endregion
 }

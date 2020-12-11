@@ -367,7 +367,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1188890252}
     m_Modifications:
     - target: {fileID: 1302717229743420, guid: 3799b466693f2274ea286d89dd431724, type: 3}
       propertyPath: m_Name
@@ -422,7 +422,7 @@ PrefabInstance:
     - target: {fileID: 224044044590867852, guid: 3799b466693f2274ea286d89dd431724,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224044044590867852, guid: 3799b466693f2274ea286d89dd431724,
         type: 3}
@@ -442,12 +442,12 @@ PrefabInstance:
     - target: {fileID: 224044044590867852, guid: 3799b466693f2274ea286d89dd431724,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 2048
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224044044590867852, guid: 3799b466693f2274ea286d89dd431724,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 107.999985
+      value: -660
       objectReference: {fileID: 0}
     - target: {fileID: 224044044590867852, guid: 3799b466693f2274ea286d89dd431724,
         type: 3}
@@ -488,6 +488,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.4999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 224044044590867852, guid: 3799b466693f2274ea286d89dd431724,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224044044590867852, guid: 3799b466693f2274ea286d89dd431724,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224044044590867852, guid: 3799b466693f2274ea286d89dd431724,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3799b466693f2274ea286d89dd431724, type: 3}
@@ -1278,7 +1293,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1071484599
 GameObject:
@@ -1342,6 +1357,7 @@ MonoBehaviour:
   bottomMargin: 0
   infinitelyScroll: 1
   infiniteScrollingEndSpacing: 0.025
+  useOcclusionCulling: 0
   startingPanel: 0
   swipeGestures: 1
   minimumSwipeSpeed: 0
@@ -1353,6 +1369,7 @@ MonoBehaviour:
   snappingSpeed: 10
   thresholdSnappingSpeed: -1
   hardSnap: 1
+  useUnscaledTime: 0
   onPanelChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1365,7 +1382,244 @@ MonoBehaviour:
   onPanelChanging:
     m_PersistentCalls:
       m_Calls: []
-  transitionEffects: []
+  transitionEffects:
+  - minDisplacement: -5
+    maxDisplacement: 5
+    minValue: 0
+    maxValue: 1
+    defaultMinValue: 0
+    defaultMaxValue: 1
+    defaultMinDisplacement: -5
+    defaultMaxDisplacement: 5
+    showPanel: 1
+    showDisplacement: 1
+    showValue: 1
+    label: color.g
+    function:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    defaultFunction:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    simpleScrollSnap: {fileID: 1071484601}
+  - minDisplacement: -5
+    maxDisplacement: 5
+    minValue: 0
+    maxValue: 1
+    defaultMinValue: 0
+    defaultMaxValue: 1
+    defaultMinDisplacement: -5
+    defaultMaxDisplacement: 5
+    showPanel: 0
+    showDisplacement: 0
+    showValue: 0
+    label: color.r
+    function:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    defaultFunction:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    simpleScrollSnap: {fileID: 1071484601}
+  - minDisplacement: -5
+    maxDisplacement: 5
+    minValue: 0
+    maxValue: 1
+    defaultMinValue: 0
+    defaultMaxValue: 1
+    defaultMinDisplacement: -5
+    defaultMaxDisplacement: 5
+    showPanel: 0
+    showDisplacement: 0
+    showValue: 0
+    label: color.b
+    function:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    defaultFunction:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    simpleScrollSnap: {fileID: 1071484601}
 --- !u!114 &1071484602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1639,7 +1893,8 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
-  m_Children: []
+  m_Children:
+  - {fileID: 1235328615}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1648,6 +1903,12 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!224 &1235328615 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 224044044590867852, guid: 3799b466693f2274ea286d89dd431724,
+    type: 3}
+  m_PrefabInstance: {fileID: 266822785}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1247719094
 GameObject:
   m_ObjectHideFlags: 0
@@ -2062,7 +2323,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
 --- !u!1 &1801313307
 GameObject:
