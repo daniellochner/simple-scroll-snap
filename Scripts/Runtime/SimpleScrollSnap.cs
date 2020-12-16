@@ -545,10 +545,10 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                             panel.transform.localPosition = new Vector3(panel.transform.localPosition.x, panel.transform.localPosition.y, transitionEffect.GetValue(displacement));
                             break;
                         case "localScale.x":
-                            panel.transform.localScale = new Vector2(transitionEffect.GetValue(displacement), panel.transform.localScale.y);
+                            panel.transform.localScale = new Vector3(transitionEffect.GetValue(displacement), panel.transform.localScale.y, panel.transform.localScale.z);
                             break;
                         case "localScale.y":
-                            panel.transform.localScale = new Vector2(panel.transform.localScale.x, transitionEffect.GetValue(displacement));
+                            panel.transform.localScale = new Vector3(panel.transform.localScale.x, transitionEffect.GetValue(displacement), panel.transform.localScale.z);
                             break;
                         case "localRotation.x":
                             panel.transform.localRotation = Quaternion.Euler(new Vector3(transitionEffect.GetValue(displacement), panel.transform.localEulerAngles.y, panel.transform.localEulerAngles.z));
