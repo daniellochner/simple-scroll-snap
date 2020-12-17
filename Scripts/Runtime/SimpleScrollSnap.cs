@@ -563,24 +563,56 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                             foreach (Graphic graphic in panelGraphics[i])
                             {
                                 graphic.color = new Color(transitionEffect.GetValue(displacement), graphic.color.g, graphic.color.b, graphic.color.a);
+
+                                foreach (Transform child in Content.GetChild(i).transform)
+                                {
+                                    if (child.TryGetComponent(out Graphic childGraphic))
+                                    {
+                                        childGraphic.color = new Color(transitionEffect.GetValue(displacement), childGraphic.color.g, childGraphic.color.b, childGraphic.color.a);
+                                    }
+                                }
                             }
                             break;
                         case "color.g":
                             foreach (Graphic graphic in panelGraphics[i])
                             {
                                 graphic.color = new Color(graphic.color.r, transitionEffect.GetValue(displacement), graphic.color.b, graphic.color.a);
+
+                                foreach (Transform child in Content.GetChild(i).transform)
+                                {
+                                    if (child.TryGetComponent(out Graphic childGraphic))
+                                    {
+                                        childGraphic.color = new Color(childGraphic.color.r, transitionEffect.GetValue(displacement), childGraphic.color.b, childGraphic.color.a);
+                                    }
+                                }
                             }
                             break;
                         case "color.b":
                             foreach (Graphic graphic in panelGraphics[i])
                             {
                                 graphic.color = new Color(graphic.color.r, graphic.color.g, transitionEffect.GetValue(displacement), graphic.color.a);
+
+                                foreach (Transform child in Content.GetChild(i).transform)
+                                {
+                                    if (child.TryGetComponent(out Graphic childGraphic))
+                                    {
+                                        childGraphic.color = new Color(childGraphic.color.r, childGraphic.color.g, transitionEffect.GetValue(displacement), childGraphic.color.a);
+                                    }
+                                }
                             }
                             break;
                         case "color.a":
                             foreach (Graphic graphic in panelGraphics[i])
                             {
                                 graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, transitionEffect.GetValue(displacement));
+
+                                foreach (Transform child in Content.GetChild(i).transform)
+                                {
+                                    if(child.TryGetComponent(out Graphic childGraphic))
+                                    {
+                                        childGraphic.color = new Color(childGraphic.color.r, childGraphic.color.g, childGraphic.color.b, transitionEffect.GetValue(displacement));
+                                    }
+                                }
                             }
                             break;
                     }
