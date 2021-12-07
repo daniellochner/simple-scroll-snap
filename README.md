@@ -1,4 +1,6 @@
 <h1>Simple Scroll-Snap</h1>
+<img src=""></img>
+
 <i>“Simple Scroll-Snap” is an elegantly designed, intuitive solution that allows for elements within a ScrollView to be snapped to, offering a wide range of customization options.</i>
 
 Try out the demo <a href="https://daniellochner.itch.io/unity3d-assets">here</a>!
