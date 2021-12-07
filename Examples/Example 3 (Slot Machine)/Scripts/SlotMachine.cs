@@ -1,6 +1,5 @@
-﻿// Simple Scroll-Snap
-// Version: 1.0.0
-// Author: Daniel Lochner
+﻿// Simple Scroll-Snap - https://assetstore.unity.com/packages/tools/gui/simple-scroll-snap-140884
+// Copyright (c) Daniel Lochner
 
 using UnityEngine;
 
@@ -9,16 +8,15 @@ namespace DanielLochner.Assets.SimpleScrollSnap
     public class SlotMachine : MonoBehaviour
     {
         #region Fields
-        [SerializeField]
-        protected SimpleScrollSnap[] slots;
+        [SerializeField] private SimpleScrollSnap[] slots;
         #endregion
 
         #region Methods
-        public void OnSpin()
+        public void Spin()
         {
             foreach (SimpleScrollSnap slot in slots)
             {
-                slot.AddVelocity(Random.Range(2500, 10000) * Vector2.up);
+                slot.Velocity += Random.Range(2500, 5000) * Vector2.up;
             }
         }
         #endregion
