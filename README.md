@@ -1,5 +1,6 @@
 <h1>Simple Scroll-Snap</h1>
-<img src=""></img>
+
+![Simple Scroll-Snap](https://user-images.githubusercontent.com/37551307/145120995-fcbaaabf-048d-4824-9f66-c1cc05cce717.png)
 
 <i>“Simple Scroll-Snap” is an elegantly designed, intuitive solution that allows for elements within a ScrollView to be snapped to, offering a wide range of customization options.</i>
 
