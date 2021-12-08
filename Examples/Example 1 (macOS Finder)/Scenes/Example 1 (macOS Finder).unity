@@ -3074,7 +3074,7 @@ MonoBehaviour:
   nextButton: {fileID: 1113322751}
   pagination: {fileID: 2036718095}
   useToggleNavigation: 1
-  snapTarget: 0
+  snapTarget: 2
   snapSpeed: 10
   thresholdSpeedToSnap: -1
   useHardSnapping: 1
