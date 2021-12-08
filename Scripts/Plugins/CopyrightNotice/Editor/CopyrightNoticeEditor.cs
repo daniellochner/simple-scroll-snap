@@ -11,7 +11,7 @@ namespace DanielLochner.Assets
     /// Derive from to display a copyright notice above scripts in the inspector.
     /// Relevant scripts must be in the same namespace as the derived editor.
     /// </summary>
-    public abstract class CopyrightEditor : Editor
+    public abstract class CopyrightNoticeEditor : Editor
     {
         public abstract string Product { get; }
         public abstract string CopyrightHolder { get; }
