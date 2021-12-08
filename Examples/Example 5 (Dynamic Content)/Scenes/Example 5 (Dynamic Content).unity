@@ -2234,6 +2234,7 @@ MonoBehaviour:
   toggleGroup: {fileID: 1323301486}
   addInputField: {fileID: 1652476181}
   removeInputField: {fileID: 1491337802}
+  scrollSnap: {fileID: 1604489099}
 --- !u!114 &1604489102
 MonoBehaviour:
   m_ObjectHideFlags: 0

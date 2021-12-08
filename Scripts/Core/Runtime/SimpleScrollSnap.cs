@@ -180,15 +180,26 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 
         public RectTransform Content
         {
-            get => scrollRect.content;
+            get => ScrollRect.content;
         }
         public RectTransform Viewport
         {
-            get => scrollRect.viewport;
+            get => ScrollRect.viewport;
         }
         public RectTransform RectTransform
         {
             get => transform as RectTransform;
+        }
+        public ScrollRect ScrollRect
+        {
+            get
+            {
+                if (scrollRect == null)
+                {
+                    scrollRect = GetComponent<ScrollRect>();
+                }
+                return scrollRect;
+            }
         }
         public int NumberOfPanels
         {
@@ -223,7 +234,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             get => velocity;
             set
             {
-                scrollRect.velocity = velocity = value;
+                ScrollRect.velocity = velocity = value;
                 isSelected = false;
             }
         }
@@ -251,10 +262,6 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         #endregion
 
         #region Methods
-        private void Awake()
-        {
-            Initialize();
-        }
         private void Start()
         {
             if (ValidConfig)
@@ -278,12 +285,6 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 
             GetVelocity();
         }
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            Initialize();
-        }
-#endif
 
         public void OnPointerDown(PointerEventData eventData)
         {
@@ -297,7 +298,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         {
             if (useHardSnapping)
             {
-                scrollRect.inertia = true;
+                ScrollRect.inertia = true;
             }
 
             isSelected = false;
@@ -318,18 +319,14 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             }
             releaseSpeed = Velocity.magnitude;
         }
-        
-        private void Initialize()
-        {
-            scrollRect = GetComponent<ScrollRect>();
-        }
+
         private void Setup()
         {
             if (NumberOfPanels == 0) return;
 
             // Scroll-Rect
-            scrollRect.horizontal = (movementType == SSS_MovementType.Free) || (movementAxis == SSS_MovementAxis.Horizontal);
-            scrollRect.vertical =   (movementType == SSS_MovementType.Free) || (movementAxis == SSS_MovementAxis.Vertical);
+            ScrollRect.horizontal = (movementType == SSS_MovementType.Free) || (movementAxis == SSS_MovementAxis.Horizontal);
+            ScrollRect.vertical =   (movementType == SSS_MovementType.Free) || (movementAxis == SSS_MovementAxis.Vertical);
 
             // Panels
             if (sizeControl == SSS_SizeControl.Fit)
@@ -378,7 +375,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 // Infinite Scrolling
                 if (useInfiniteScrolling)
                 {
-                    scrollRect.movementType = ScrollRect.MovementType.Unrestricted;
+                    ScrollRect.movementType = ScrollRect.MovementType.Unrestricted;
                     contentSize = Content.rect.size + (size * infiniteScrollingSpacing);
                     HandleInfiniteScrolling(true);
                 }
@@ -439,7 +436,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                     SnapToPanel();
                 }
             }
-            else if (!isDragging && (scrollRect.velocity.magnitude <= thresholdSpeedToSnap || thresholdSpeedToSnap == -1f))
+            else if (!isDragging && (ScrollRect.velocity.magnitude <= thresholdSpeedToSnap || thresholdSpeedToSnap == -1f))
             {
                 SelectPanel();
             }
@@ -505,12 +502,12 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         {
             if (useSwipeGestures)
             {
-                scrollRect.horizontal = (movementType == SSS_MovementType.Free) || (movementAxis == SSS_MovementAxis.Horizontal);
-                scrollRect.vertical   = (movementType == SSS_MovementType.Free) || (movementAxis == SSS_MovementAxis.Vertical);
+                ScrollRect.horizontal = (movementType == SSS_MovementType.Free) || (movementAxis == SSS_MovementAxis.Horizontal);
+                ScrollRect.vertical   = (movementType == SSS_MovementType.Free) || (movementAxis == SSS_MovementAxis.Vertical);
             }
             else
             {
-                scrollRect.horizontal = scrollRect.vertical = !isDragging;
+                ScrollRect.horizontal = ScrollRect.vertical = !isDragging;
             }
         }
         private void HandleTransitionEffects()
@@ -596,7 +593,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             }
             if (useHardSnapping)
             {
-                scrollRect.inertia = false;
+                ScrollRect.inertia = false;
             }
         }
         public void GoToPreviousPanel()

@@ -14,15 +14,14 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         [SerializeField] private Toggle togglePrefab;
         [SerializeField] private ToggleGroup toggleGroup;
         [SerializeField] private InputField addInputField, removeInputField;
+        [SerializeField] private SimpleScrollSnap scrollSnap;
 
         private float toggleWidth;
-        private SimpleScrollSnap scrollSnap;
         #endregion
 
         #region Methods
         private void Awake()
         {
-            scrollSnap = GetComponent<SimpleScrollSnap>();
             toggleWidth = (togglePrefab.transform as RectTransform).sizeDelta.x * (Screen.width / 2048f); ;
         }
 
