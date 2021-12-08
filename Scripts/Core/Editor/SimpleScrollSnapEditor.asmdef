@@ -1,0 +1,20 @@
+{
+    "name": "SimpleScrollSnap.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:029025e1205b66b4c8a934409337eed0",
+        "GUID:8ba351204c3a6df4aa826ac3f0423d50",
+        "GUID:8a8c5dc53dc04e0448389944602a225f"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

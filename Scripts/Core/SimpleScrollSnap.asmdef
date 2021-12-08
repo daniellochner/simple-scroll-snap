@@ -1,0 +1,17 @@
+{
+    "name": "SimpleScrollSnap",
+    "rootNamespace": "",
+    "references": [
+        "GUID:12118caebfe178849a046b8f7807f49c",
+        "GUID:bd40a93214a352f4090ee5aa999ef018"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
