@@ -1,10 +1,12 @@
-# Simple Scroll-Snap
-
-![Simple Scroll-Snap](https://user-images.githubusercontent.com/37551307/145120995-fcbaaabf-048d-4824-9f66-c1cc05cce717.png)
-
-"Simple Scroll-Snap" is an elegantly designed, intuitive solution that allows for elements within a ScrollView to be snapped to, offering a wide range of customization options.
-
-Try out the demo [here](https://daniellochner.itch.io/unity3d-assets)!
+<h1 align="middle">Simple Scroll-Snap</h1>
+<p align="middle">
+  <img src="https://user-images.githubusercontent.com/37551307/145120995-fcbaaabf-048d-4824-9f66-c1cc05cce717.png" width="100%">
+</p>
+<p align="middle">
+  <img src="https://user-images.githubusercontent.com/37551307/145459463-9ffdff01-f492-415f-b04f-8c0b2fd9bd55.jpg" width="100%">
+</p>
+<p align="middle">"Simple Scroll-Snap" is an elegantly designed, intuitive solution that allows for elements within a ScrollView to be snapped to, offering a wide range of customization options.</p>
+<p align="middle">Try out the demo <a href="https://daniellochner.itch.io/unity3d-assets">here</a>.
 
 ## Features:
 - Fixed (Horizontal/Vertical) or Free movement system.
