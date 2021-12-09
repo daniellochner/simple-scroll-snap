@@ -12,7 +12,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
     {
         #region Fields
         private bool showMovementAndLayoutSettings = true, showNavigationSettings = true, showSnapSettings = true, showTransitionEffects = true, showEvents = false;
-        private SerializedProperty movementType, movementAxis, useAutomaticLayout, sizeControl, size, automaticLayoutSpacing, automaticLayoutMargins, useInfiniteScrolling, infiniteScrollingSpacing, useOcclusionCulling, startingPanel, useSwipeGestures, minimumSwipeSpeed, previousButton, nextButton, pagination, useToggleNavigation, snapTarget, snapSpeed, thresholdSpeedToSnap, useHardSnapping, useUnscaledTime, onTransitionEffects, onPanelSelected, onPanelCentered;
+        private SerializedProperty movementType, movementAxis, useAutomaticLayout, sizeControl, size, automaticLayoutSpacing, automaticLayoutMargins, useInfiniteScrolling, infiniteScrollingSpacing, useOcclusionCulling, startingPanel, useSwipeGestures, minimumSwipeSpeed, previousButton, nextButton, pagination, useToggleNavigation, snapTarget, snapSpeed, thresholdSpeedToSnap, useHardSnapping, useUnscaledTime, onTransitionEffects, onPanelSelecting, onPanelSelected, onPanelCentering, onPanelCentered;
         private SimpleScrollSnap scrollSnap;
         #endregion
 
@@ -52,7 +52,9 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 
             // ShowEvents
             onTransitionEffects = serializedObject.FindProperty("onTransitionEffects");
+            onPanelSelecting = serializedObject.FindProperty("onPanelSelecting");
             onPanelSelected = serializedObject.FindProperty("onPanelSelected");
+            onPanelCentering = serializedObject.FindProperty("onPanelCentering");
             onPanelCentered = serializedObject.FindProperty("onPanelCentered");
             #endregion
         }
@@ -231,7 +233,9 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             if (showEvents)
             {
                 EditorGUILayout.PropertyField(onTransitionEffects);
+                EditorGUILayout.PropertyField(onPanelSelecting);
                 EditorGUILayout.PropertyField(onPanelSelected);
+                EditorGUILayout.PropertyField(onPanelCentering);
                 EditorGUILayout.PropertyField(onPanelCentered);
             }
         }

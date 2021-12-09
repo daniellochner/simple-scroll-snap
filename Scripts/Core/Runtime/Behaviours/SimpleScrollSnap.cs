@@ -11,7 +11,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 {
     [AddComponentMenu("UI/Simple Scroll-Snap")]
     [RequireComponent(typeof(ScrollRect))]
-    public class SimpleScrollSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
+    public class SimpleScrollSnap : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
     {
         #region Fields
         // Movement and Layout Settings
@@ -44,8 +44,10 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         
         // Events
         [SerializeField] private UnityEvent<GameObject, float> onTransitionEffects = new UnityEvent<GameObject, float>();
-        [SerializeField] private UnityEvent<int> onPanelCentered = new UnityEvent<int>();
+        [SerializeField] private UnityEvent<int> onPanelSelecting = new UnityEvent<int>();
         [SerializeField] private UnityEvent<int> onPanelSelected = new UnityEvent<int>();
+        [SerializeField] private UnityEvent<int, int> onPanelCentering = new UnityEvent<int, int>();
+        [SerializeField] private UnityEvent<int, int> onPanelCentered = new UnityEvent<int, int>();
 
         private ScrollRect scrollRect;
         private Vector2 contentSize, prevAnchoredPosition, velocity;
@@ -169,11 +171,19 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         {
             get => onTransitionEffects;
         }
+        public UnityEvent<int> OnPanelSelecting
+        {
+            get => onPanelSelecting;
+        }
         public UnityEvent<int> OnPanelSelected
         {
             get => onPanelSelected;
         }
-        public UnityEvent<int> OnPanelCentered
+        public UnityEvent<int, int> OnPanelCentering
+        {
+            get => onPanelCentering;
+        }
+        public UnityEvent<int, int> OnPanelCentered
         {
             get => onPanelCentered;
         }
@@ -293,6 +303,13 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         public void OnPointerUp(PointerEventData eventData)
         {
             isPressing = false;
+        }
+        public void OnDrag(PointerEventData eventData)
+        {
+            if (isDragging && onPanelSelecting.GetPersistentEventCount() > 0)
+            {
+                onPanelSelecting.Invoke(GetNearestPanel());
+            }
         }
         public void OnBeginDrag(PointerEventData eventData)
         {
@@ -575,9 +592,17 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             Vector2 targetPosition = -Panels[CenteredPanel].anchoredPosition + offset;
             Content.anchoredPosition = Vector2.Lerp(Content.anchoredPosition, targetPosition, (useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime) * snapSpeed);
 
-            if (SelectedPanel != CenteredPanel && GetDisplacementFromCenter(CenteredPanel).magnitude < (Viewport.rect.width / 10f))
+            if (SelectedPanel != CenteredPanel)
             {
-                onPanelCentered.Invoke(SelectedPanel = CenteredPanel);
+                if (GetDisplacementFromCenter(CenteredPanel).magnitude < (Viewport.rect.width / 10f))
+                {
+                    onPanelCentered.Invoke(CenteredPanel, SelectedPanel);
+                    SelectedPanel = CenteredPanel;
+                }
+            }
+            else
+            {
+                onPanelCentering.Invoke(CenteredPanel, SelectedPanel);
             }
         }
 
