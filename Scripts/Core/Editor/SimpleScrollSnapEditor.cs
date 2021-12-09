@@ -50,7 +50,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             useHardSnapping = serializedObject.FindProperty("useHardSnapping");
             useUnscaledTime = serializedObject.FindProperty("useUnscaledTime");
 
-            // Events
+            // ShowEvents
             onTransitionEffects = serializedObject.FindProperty("onTransitionEffects");
             onPanelSelected = serializedObject.FindProperty("onPanelSelected");
             onPanelCentered = serializedObject.FindProperty("onPanelCentered");
@@ -60,59 +60,59 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         {
             serializedObject.Update();
 
-            CopyrightNotice();
-            MovementAndLayoutSettings();
-            NavigationSettings();
-            SnapSettings();
-            Events();
+            ShowCopyrightNotice();
+            ShowMovementAndLayoutSettings();
+            ShowNavigationSettings();
+            ShowSnapSettings();
+            ShowEvents();
 
             serializedObject.ApplyModifiedProperties();
             PrefabUtility.RecordPrefabInstancePropertyModifications(scrollSnap);
         }
         
-        private void MovementAndLayoutSettings()
+        private void ShowMovementAndLayoutSettings()
         {
             EditorGUILayout.Space();
 
             EditorLayoutUtility.Header(ref showMovementAndLayoutSettings, new GUIContent("Movement and Layout Settings"));
             if (showMovementAndLayoutSettings)
             {
-                StartingPanel();
-                MovementType();
+                ShowStartingPanel();
+                ShowMovementType();
             }
             EditorGUILayout.Space();
         }
-        private void StartingPanel()
+        private void ShowStartingPanel()
         {
             EditorGUILayout.IntSlider(startingPanel, 0, scrollSnap.NumberOfPanels - 1, new GUIContent("Starting Panel", "The number of the panel that will be displayed first, based on a 0-indexed array."));
         }
-        private void MovementType()
+        private void ShowMovementType()
         {
             EditorGUILayout.PropertyField(movementType, new GUIContent("Movement Type", "Determines how users will be able to move between panels within the ScrollRect."));
-            if (scrollSnap.MovementType == SimpleScrollSnap.SSS_MovementType.Fixed)
+            if (scrollSnap.MovementType == MovementType.Fixed)
             {
                 EditorGUI.indentLevel++;
 
-                MovementAxis();
-                UseAutomaticLayout();
-                UseInfiniteScrolling();
-                UseOcclusionCulling();
+                ShowMovementAxis();
+                ShowUseAutomaticLayout();
+                ShowUseInfiniteScrolling();
+                ShowUseOcclusionCulling();
 
                 EditorGUI.indentLevel--;
             }
         }
-        private void MovementAxis()
+        private void ShowMovementAxis()
         {
             EditorGUILayout.PropertyField(movementAxis, new GUIContent("Movement Axis", "Determines the axis the user's movement will be restricted to."));
         }
-        private void UseAutomaticLayout()
+        private void ShowUseAutomaticLayout()
         {
             EditorGUILayout.PropertyField(useAutomaticLayout, new GUIContent("Use Automatic Layout", "Should panels be automatically positioned and scaled according to the specified movement axis, spacing, margins and size?"));
             if (scrollSnap.UseAutomaticLayout)
             {
                 EditorGUI.indentLevel++;
                 EditorGUILayout.PropertyField(sizeControl, new GUIContent("Size Control", "Determines how the panels' size should be controlled."));
-                if (scrollSnap.SizeControl == SimpleScrollSnap.SSS_SizeControl.Manual)
+                if (scrollSnap.SizeControl == SizeControl.Manual)
                 {
                     EditorGUI.indentLevel++;
                     EditorGUILayout.PropertyField(size, new GUIContent("Size", "The size (in pixels) that panels will be when automatically laid out."));
@@ -123,7 +123,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 EditorGUI.indentLevel--;
             }
         }
-        private void UseInfiniteScrolling()
+        private void ShowUseInfiniteScrolling()
         {
             EditorGUILayout.PropertyField(useInfiniteScrolling, new GUIContent("Use Infinite Scrolling", "Should panels wrap around to the opposite end once passed, giving the illusion of an infinite list of elements?"));
             if (scrollSnap.UseInfiniteScrolling)
@@ -133,24 +133,24 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 EditorGUI.indentLevel--;
             }
         }
-        private void UseOcclusionCulling()
+        private void ShowUseOcclusionCulling()
         {
             EditorGUILayout.PropertyField(useOcclusionCulling, new GUIContent("Use Occlusion Culling", "Should panels not visible in the viewport be disabled?"));
         }
 
-        private void NavigationSettings()
+        private void ShowNavigationSettings()
         {
             EditorLayoutUtility.Header(ref showNavigationSettings, new GUIContent("Navigation Settings"));
             if (showNavigationSettings)
             {
-                UseSwipeGestures();
-                PreviousButton();
-                NextButton();
-                Pagination();
+                ShowUseSwipeGestures();
+                ShowPreviousButton();
+                ShowNextButton();
+                ShowPagination();
             }
             EditorGUILayout.Space();
         }
-        private void UseSwipeGestures()
+        private void ShowUseSwipeGestures()
         {
             EditorGUILayout.PropertyField(useSwipeGestures, new GUIContent("Use Swipe Gestures", "Should users are able to use swipe gestures to navigate between panels?"));
             if (scrollSnap.UseSwipeGestures)
@@ -160,15 +160,15 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 EditorGUI.indentLevel--;
             }
         }
-        private void PreviousButton()
+        private void ShowPreviousButton()
         {
             EditorGUILayout.ObjectField(previousButton, typeof(Button), new GUIContent("Previous Button", "(Optional) Button used to transition to the previous panel."));
         }
-        private void NextButton()
+        private void ShowNextButton()
         {
             EditorGUILayout.ObjectField(nextButton, typeof(Button), new GUIContent("Next Button", "(Optional) Button used to transition to the next panel."));
         }
-        private void Pagination()
+        private void ShowPagination()
         {
             EditorGUILayout.ObjectField(pagination, typeof(ToggleGroup), new GUIContent("Pagination", "(Optional) ToggleGroup containing Toggles that shows the current position of the user and can be used to transition to a selected panel."));
             if (scrollSnap.Pagination != null)
@@ -184,50 +184,50 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             }
         }
 
-        private void SnapSettings()
+        private void ShowSnapSettings()
         {
             EditorLayoutUtility.Header(ref showSnapSettings, new GUIContent("Snap Settings"));
             if (showSnapSettings)
             {
-                SnapTarget();
-                SnapSpeed();
-                ThresholdSpeedToSnap();
-                UseHardSnapping();
-                UseUnscaledTime();
+                ShowSnapTarget();
+                ShowSnapSpeed();
+                ShowThresholdSpeedToSnap();
+                ShowUseHardSnapping();
+                ShowUseUnscaledTime();
             }
             EditorGUILayout.Space();
         }
-        private void SnapTarget()
+        private void ShowSnapTarget()
         {
-            using (new EditorGUI.DisabledScope(scrollSnap.MovementType == SimpleScrollSnap.SSS_MovementType.Free))
+            using (new EditorGUI.DisabledScope(scrollSnap.MovementType == MovementType.Free))
             {
                 EditorGUILayout.PropertyField(snapTarget, new GUIContent("Snap Target", "Determines what panel should be targeted and snapped to once the threshold snapping speed has been reached."));
             }
-            if (scrollSnap.MovementType == SimpleScrollSnap.SSS_MovementType.Free)
+            if (scrollSnap.MovementType == MovementType.Free)
             {
-                scrollSnap.SnapTarget = SimpleScrollSnap.SSS_SnapTarget.Nearest;
+                scrollSnap.SnapTarget = SnapTarget.Nearest;
             }
         }
-        private void SnapSpeed()
+        private void ShowSnapSpeed()
         {
             EditorGUILayout.PropertyField(snapSpeed, new GUIContent("Snap Speed", "The speed at which the targeted panel snaps into position."));
         }
-        private void ThresholdSpeedToSnap()
+        private void ShowThresholdSpeedToSnap()
         {
             EditorGUILayout.PropertyField(thresholdSpeedToSnap, new GUIContent("Threshold Speed To Snap", "The speed at which the ScrollRect will stop scrolling and begin snapping to the targeted panel (where -1 is used as infinity)."));
         }
-        private void UseHardSnapping()
+        private void ShowUseHardSnapping()
         {
             EditorGUILayout.PropertyField(useHardSnapping, new GUIContent("Use Hard Snapping", "Should the inertia of the ScrollRect be disabled once a panel has been selected? If enabled, the ScrollRect will not overshoot the targeted panel when snapping into position and instead Lerp precisely towards the targeted panel."));
         }
-        private void UseUnscaledTime()
+        private void ShowUseUnscaledTime()
         {
             EditorGUILayout.PropertyField(useUnscaledTime, new GUIContent("Use Unscaled Time", "Should the scroll-snap update irrespective of the time scale?"));
         }
 
-        private void Events()
+        private void ShowEvents()
         {
-            EditorLayoutUtility.Header(ref showEvents, new GUIContent("Events"));
+            EditorLayoutUtility.Header(ref showEvents, new GUIContent("ShowEvents"));
             if (showEvents)
             {
                 EditorGUILayout.PropertyField(onTransitionEffects);

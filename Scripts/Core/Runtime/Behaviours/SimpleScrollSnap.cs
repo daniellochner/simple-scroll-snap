@@ -15,11 +15,11 @@ namespace DanielLochner.Assets.SimpleScrollSnap
     {
         #region Fields
         // Movement and Layout Settings
-        [SerializeField] private SSS_MovementType movementType = SSS_MovementType.Fixed;
-        [SerializeField] private SSS_MovementAxis movementAxis = SSS_MovementAxis.Horizontal;
+        [SerializeField] private MovementType movementType = MovementType.Fixed;
+        [SerializeField] private MovementAxis movementAxis = MovementAxis.Horizontal;
         [SerializeField] private bool useAutomaticLayout = true;
         [SerializeField] private float automaticLayoutSpacing = 0.25f;
-        [SerializeField] private SSS_SizeControl sizeControl = SSS_SizeControl.Fit;
+        [SerializeField] private SizeControl sizeControl = SizeControl.Fit;
         [SerializeField] private Vector2 size = new Vector2(400, 250);
         [SerializeField] private Margins automaticLayoutMargins = new Margins(0);
         [SerializeField] private bool useInfiniteScrolling = false;
@@ -36,7 +36,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         [SerializeField] private bool useToggleNavigation = true;
 
         // Snap Settings
-        [SerializeField] private SSS_SnapTarget snapTarget = SSS_SnapTarget.Next;
+        [SerializeField] private SnapTarget snapTarget = SnapTarget.Next;
         [SerializeField] private float snapSpeed = 10f;
         [SerializeField] private float thresholdSpeedToSnap = -1f;
         [SerializeField] private bool useHardSnapping = true;
@@ -49,18 +49,18 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 
         private ScrollRect scrollRect;
         private Vector2 contentSize, prevAnchoredPosition, velocity;
-        private SSS_Direction releaseDirection;
+        private Direction releaseDirection;
         private float releaseSpeed;
         private bool isDragging, isPressing, isSelected = true;
         #endregion
 
         #region Properties
-        public SSS_MovementType MovementType
+        public MovementType MovementType
         {
             get => movementType;
             set => movementType = value;
         }
-        public SSS_MovementAxis MovementAxis
+        public MovementAxis MovementAxis
         {
             get => movementAxis;
             set => movementAxis = value;
@@ -70,7 +70,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             get => useAutomaticLayout;
             set => useAutomaticLayout = value;
         }
-        public SSS_SizeControl SizeControl
+        public SizeControl SizeControl
         {
             get => sizeControl;
             set => sizeControl = value;
@@ -140,7 +140,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             get => useToggleNavigation;
             set => useToggleNavigation = value;
         }
-        public SSS_SnapTarget SnapTarget
+        public SnapTarget SnapTarget
         {
             get => snapTarget;
             set => snapTarget = value;
@@ -310,11 +310,11 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 
             switch (movementAxis)
             {
-                case SSS_MovementAxis.Horizontal:
-                    releaseDirection = (Velocity.x > 0) ? SSS_Direction.Right : SSS_Direction.Left;
+                case MovementAxis.Horizontal:
+                    releaseDirection = (Velocity.x > 0) ? Direction.Right : Direction.Left;
                     break;
-                case SSS_MovementAxis.Vertical:
-                    releaseDirection = (Velocity.y > 0) ? SSS_Direction.Up : SSS_Direction.Down;
+                case MovementAxis.Vertical:
+                    releaseDirection = (Velocity.y > 0) ? Direction.Up : Direction.Down;
                     break;
             }
             releaseSpeed = Velocity.magnitude;
@@ -325,11 +325,11 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             if (NumberOfPanels == 0) return;
 
             // Scroll-Rect
-            ScrollRect.horizontal = (movementType == SSS_MovementType.Free) || (movementAxis == SSS_MovementAxis.Horizontal);
-            ScrollRect.vertical =   (movementType == SSS_MovementType.Free) || (movementAxis == SSS_MovementAxis.Vertical);
+            ScrollRect.horizontal = (movementType == MovementType.Free) || (movementAxis == MovementAxis.Horizontal);
+            ScrollRect.vertical =   (movementType == MovementType.Free) || (movementAxis == MovementAxis.Vertical);
 
             // Panels
-            if (sizeControl == SSS_SizeControl.Fit)
+            if (sizeControl == SizeControl.Fit)
             {
                 size = Viewport.rect.size;
             }
@@ -337,10 +337,10 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             for (int i = 0; i < NumberOfPanels; i++)
             {
                 Panels[i] = Content.GetChild(i) as RectTransform;
-                if (movementType == SSS_MovementType.Fixed && useAutomaticLayout)
+                if (movementType == MovementType.Fixed && useAutomaticLayout)
                 {
-                    Panels[i].anchorMin = new Vector2(movementAxis == SSS_MovementAxis.Horizontal ? 0f : 0.5f, movementAxis == SSS_MovementAxis.Vertical ? 0f : 0.5f);
-                    Panels[i].anchorMax = new Vector2(movementAxis == SSS_MovementAxis.Horizontal ? 0f : 0.5f, movementAxis == SSS_MovementAxis.Vertical ? 0f : 0.5f);
+                    Panels[i].anchorMin = new Vector2(movementAxis == MovementAxis.Horizontal ? 0f : 0.5f, movementAxis == MovementAxis.Vertical ? 0f : 0.5f);
+                    Panels[i].anchorMax = new Vector2(movementAxis == MovementAxis.Horizontal ? 0f : 0.5f, movementAxis == MovementAxis.Vertical ? 0f : 0.5f);
 
                     float x = (automaticLayoutMargins.Right + automaticLayoutMargins.Left)   / 2f - automaticLayoutMargins.Left;
                     float y = (automaticLayoutMargins.Top   + automaticLayoutMargins.Bottom) / 2f - automaticLayoutMargins.Bottom;
@@ -348,27 +348,27 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                     Panels[i].pivot = new Vector2(0.5f, 0.5f) + marginOffset;
                     Panels[i].sizeDelta = size - new Vector2(automaticLayoutMargins.Left + automaticLayoutMargins.Right, automaticLayoutMargins.Top + automaticLayoutMargins.Bottom);
 
-                    float panelPosX = (movementAxis == SSS_MovementAxis.Horizontal) ? i * (automaticLayoutSpacing + 1f) * size.x + (size.x / 2f) : 0f;
-                    float panelPosY = (movementAxis == SSS_MovementAxis.Vertical)   ? i * (automaticLayoutSpacing + 1f) * size.y + (size.y / 2f) : 0f;
+                    float panelPosX = (movementAxis == MovementAxis.Horizontal) ? i * (automaticLayoutSpacing + 1f) * size.x + (size.x / 2f) : 0f;
+                    float panelPosY = (movementAxis == MovementAxis.Vertical)   ? i * (automaticLayoutSpacing + 1f) * size.y + (size.y / 2f) : 0f;
                     Panels[i].anchoredPosition = new Vector2(panelPosX, panelPosY);
                 }
             }
 
             // Content
-            if (movementType == SSS_MovementType.Fixed)
+            if (movementType == MovementType.Fixed)
             {
                 // Automatic Layout
                 if (useAutomaticLayout)
                 {
-                    Content.anchorMin = new Vector2(movementAxis == SSS_MovementAxis.Horizontal ? 0f : 0.5f, movementAxis == SSS_MovementAxis.Vertical ? 0f : 0.5f);
-                    Content.anchorMax = new Vector2(movementAxis == SSS_MovementAxis.Horizontal ? 0f : 0.5f, movementAxis == SSS_MovementAxis.Vertical ? 0f : 0.5f);
-                    Content.pivot = new Vector2(movementAxis == SSS_MovementAxis.Horizontal     ? 0f : 0.5f, movementAxis == SSS_MovementAxis.Vertical ? 0f : 0.5f);
+                    Content.anchorMin = new Vector2(movementAxis == MovementAxis.Horizontal ? 0f : 0.5f, movementAxis == MovementAxis.Vertical ? 0f : 0.5f);
+                    Content.anchorMax = new Vector2(movementAxis == MovementAxis.Horizontal ? 0f : 0.5f, movementAxis == MovementAxis.Vertical ? 0f : 0.5f);
+                    Content.pivot = new Vector2(movementAxis == MovementAxis.Horizontal     ? 0f : 0.5f, movementAxis == MovementAxis.Vertical ? 0f : 0.5f);
 
                     Vector2 min = Panels[0].anchoredPosition;
                     Vector2 max = Panels[NumberOfPanels - 1].anchoredPosition;
 
-                    float contentWidth  = (movementAxis == SSS_MovementAxis.Horizontal) ? (NumberOfPanels * (automaticLayoutSpacing + 1f) * size.x) - (size.x * automaticLayoutSpacing) : size.x;
-                    float contentHeight = (movementAxis == SSS_MovementAxis.Vertical)   ? (NumberOfPanels * (automaticLayoutSpacing + 1f) * size.y) - (size.y * automaticLayoutSpacing) : size.y;
+                    float contentWidth  = (movementAxis == MovementAxis.Horizontal) ? (NumberOfPanels * (automaticLayoutSpacing + 1f) * size.x) - (size.x * automaticLayoutSpacing) : size.x;
+                    float contentHeight = (movementAxis == MovementAxis.Vertical)   ? (NumberOfPanels * (automaticLayoutSpacing + 1f) * size.y) - (size.y * automaticLayoutSpacing) : size.y;
                     Content.sizeDelta = new Vector2(contentWidth, contentHeight);
                 }
 
@@ -392,8 +392,8 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             }
 
             // Starting Panel
-            float xOffset = (movementType == SSS_MovementType.Free || movementAxis == SSS_MovementAxis.Horizontal) ? Viewport.rect.width  / 2f : 0f;
-            float yOffset = (movementType == SSS_MovementType.Free || movementAxis == SSS_MovementAxis.Vertical)   ? Viewport.rect.height / 2f : 0f;
+            float xOffset = (movementType == MovementType.Free || movementAxis == MovementAxis.Horizontal) ? Viewport.rect.width  / 2f : 0f;
+            float yOffset = (movementType == MovementType.Free || movementAxis == MovementAxis.Vertical)   ? Viewport.rect.height / 2f : 0f;
             Vector2 offset = new Vector2(xOffset, yOffset);
             prevAnchoredPosition = Content.anchoredPosition = -Panels[startingPanel].anchoredPosition + offset;
             SelectedPanel = CenteredPanel = startingPanel;
@@ -449,10 +449,10 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 {
                     switch (movementAxis)
                     {
-                        case SSS_MovementAxis.Horizontal:
+                        case MovementAxis.Horizontal:
                             Panels[i].gameObject.SetActive(Mathf.Abs(GetDisplacementFromCenter(i).x) <= Viewport.rect.width  / 2f + size.x);
                             break;
-                        case SSS_MovementAxis.Vertical:
+                        case MovementAxis.Vertical:
                             Panels[i].gameObject.SetActive(Mathf.Abs(GetDisplacementFromCenter(i).y) <= Viewport.rect.height / 2f + size.y);
                             break;
                     }
@@ -465,7 +465,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             {
                 switch (movementAxis)
                 {
-                    case SSS_MovementAxis.Horizontal:
+                    case MovementAxis.Horizontal:
                         for (int i = 0; i < NumberOfPanels; i++)
                         {
                             Vector2 offset = new Vector2(contentSize.x, 0);
@@ -480,7 +480,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                             }
                         }
                         break;
-                    case SSS_MovementAxis.Vertical:
+                    case MovementAxis.Vertical:
                         for (int i = 0; i < NumberOfPanels; i++)
                         {
                             Vector2 offset = new Vector2(0, contentSize.y);
@@ -502,8 +502,8 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         {
             if (useSwipeGestures)
             {
-                ScrollRect.horizontal = (movementType == SSS_MovementType.Free) || (movementAxis == SSS_MovementAxis.Horizontal);
-                ScrollRect.vertical   = (movementType == SSS_MovementType.Free) || (movementAxis == SSS_MovementAxis.Vertical);
+                ScrollRect.horizontal = (movementType == MovementType.Free) || (movementAxis == MovementAxis.Horizontal);
+                ScrollRect.vertical   = (movementType == MovementType.Free) || (movementAxis == MovementAxis.Vertical);
             }
             else
             {
@@ -517,7 +517,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             for (int i = 0; i < NumberOfPanels; i++)
             {
                 Vector2 displacement = GetDisplacementFromCenter(i);
-                float d = (movementType == SSS_MovementType.Free) ? displacement.magnitude : ((movementAxis == SSS_MovementAxis.Horizontal) ? displacement.x : displacement.y);
+                float d = (movementType == MovementType.Free) ? displacement.magnitude : ((movementAxis == MovementAxis.Horizontal) ? displacement.x : displacement.y);
                 onTransitionEffects.Invoke(Panels[i].gameObject, d);
             }
         }
@@ -527,19 +527,19 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             int nearestPanel = GetNearestPanel();
             Vector2 displacementFromCenter = GetDisplacementFromCenter(nearestPanel);
 
-            if (snapTarget == SSS_SnapTarget.Nearest || releaseSpeed <= minimumSwipeSpeed)
+            if (snapTarget == SnapTarget.Nearest || releaseSpeed <= minimumSwipeSpeed)
             {
                 GoToPanel(nearestPanel);
             }
             else 
-            if (snapTarget == SSS_SnapTarget.Previous)
+            if (snapTarget == SnapTarget.Previous)
             {
-                if ((releaseDirection == SSS_Direction.Right && displacementFromCenter.x < 0f) || (releaseDirection == SSS_Direction.Up   && displacementFromCenter.y < 0f))
+                if ((releaseDirection == Direction.Right && displacementFromCenter.x < 0f) || (releaseDirection == Direction.Up   && displacementFromCenter.y < 0f))
                 {
                     GoToNextPanel();
                 }
                 else 
-                if ((releaseDirection == SSS_Direction.Left  && displacementFromCenter.x > 0f) || (releaseDirection == SSS_Direction.Down && displacementFromCenter.y > 0f))
+                if ((releaseDirection == Direction.Left  && displacementFromCenter.x > 0f) || (releaseDirection == Direction.Down && displacementFromCenter.y > 0f))
                 {
                     GoToPreviousPanel();
                 }
@@ -549,14 +549,14 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 }
             }
             else 
-            if (snapTarget == SSS_SnapTarget.Next)
+            if (snapTarget == SnapTarget.Next)
             {
-                if ((releaseDirection == SSS_Direction.Right && displacementFromCenter.x > 0f) || (releaseDirection == SSS_Direction.Up   && displacementFromCenter.y > 0f))
+                if ((releaseDirection == Direction.Right && displacementFromCenter.x > 0f) || (releaseDirection == Direction.Up   && displacementFromCenter.y > 0f))
                 {
                     GoToPreviousPanel();
                 }
                 else 
-                if ((releaseDirection == SSS_Direction.Left  && displacementFromCenter.x < 0f) || (releaseDirection == SSS_Direction.Down && displacementFromCenter.y < 0f))
+                if ((releaseDirection == Direction.Left  && displacementFromCenter.x < 0f) || (releaseDirection == Direction.Down && displacementFromCenter.y < 0f))
                 {
                     GoToNextPanel();
                 }
@@ -568,8 +568,8 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         }
         private void SnapToPanel()
         {
-            float xOffset = (movementType == SSS_MovementType.Free || movementAxis == SSS_MovementAxis.Horizontal) ? Viewport.rect.width  / 2f : 0f;
-            float yOffset = (movementType == SSS_MovementType.Free || movementAxis == SSS_MovementAxis.Vertical)   ? Viewport.rect.height / 2f : 0f;
+            float xOffset = (movementType == MovementType.Free || movementAxis == MovementAxis.Horizontal) ? Viewport.rect.width  / 2f : 0f;
+            float yOffset = (movementType == MovementType.Free || movementAxis == MovementAxis.Vertical)   ? Viewport.rect.height / 2f : 0f;
             Vector2 offset = new Vector2(xOffset, yOffset);
 
             Vector2 targetPosition = -Panels[CenteredPanel].anchoredPosition + offset;
@@ -762,37 +762,6 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             float time = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
             velocity = displacement / time;
             prevAnchoredPosition = Content.anchoredPosition;
-        }
-        #endregion
-
-        #region Enums
-        public enum SSS_MovementType
-        {
-            Fixed,
-            Free
-        }
-        public enum SSS_MovementAxis
-        {
-            Horizontal,
-            Vertical
-        }
-        public enum SSS_SizeControl
-        {
-            Manual,
-            Fit
-        }
-        public enum SSS_Direction
-        {
-            Up,
-            Down,
-            Left,
-            Right
-        }
-        public enum SSS_SnapTarget
-        {
-            Nearest,
-            Previous,
-            Next
         }
         #endregion
     }
