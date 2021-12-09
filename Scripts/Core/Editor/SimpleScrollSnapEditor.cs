@@ -11,7 +11,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
     public class SimpleScrollSnapEditor : SSSCopyrightEditor
     {
         #region Fields
-        private bool showMovementAndLayoutSettings = true, showNavigationSettings = true, showSnapSettings = true, showTransitionEffects = true, showEvents = true;
+        private bool showMovementAndLayoutSettings = true, showNavigationSettings = true, showSnapSettings = true, showTransitionEffects = true, showEvents = false;
         private SerializedProperty movementType, movementAxis, useAutomaticLayout, sizeControl, size, automaticLayoutSpacing, automaticLayoutMargins, useInfiniteScrolling, infiniteScrollingSpacing, useOcclusionCulling, startingPanel, useSwipeGestures, minimumSwipeSpeed, previousButton, nextButton, pagination, useToggleNavigation, snapTarget, snapSpeed, thresholdSpeedToSnap, useHardSnapping, useUnscaledTime, onTransitionEffects, onPanelSelected, onPanelCentered;
         private SimpleScrollSnap scrollSnap;
         #endregion
@@ -227,7 +227,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 
         private void ShowEvents()
         {
-            EditorLayoutUtility.Header(ref showEvents, new GUIContent("ShowEvents"));
+            EditorLayoutUtility.Header(ref showEvents, new GUIContent("Events"));
             if (showEvents)
             {
                 EditorGUILayout.PropertyField(onTransitionEffects);
