@@ -520,7 +520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224520028516023490}
   - component: {fileID: 114816250218656586}
-  - component: {fileID: 9161683122129991066}
+  - component: {fileID: 7989996018000118161}
   m_Layer: 5
   m_Name: Slot
   m_TagString: Untagged
@@ -578,7 +578,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &9161683122129991066
+--- !u!114 &7989996018000118161
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -587,7 +587,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1703479064152486}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 226c5379b57de37468d8622fe21c50f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 54aaa385a9b88e84e9d50b9804aaa24e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movementType: 0
@@ -619,10 +619,16 @@ MonoBehaviour:
   onTransitionEffects:
     m_PersistentCalls:
       m_Calls: []
-  onPanelCentered:
+  onPanelSelecting:
     m_PersistentCalls:
       m_Calls: []
   onPanelSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  onPanelCentering:
+    m_PersistentCalls:
+      m_Calls: []
+  onPanelCentered:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1815139151604294

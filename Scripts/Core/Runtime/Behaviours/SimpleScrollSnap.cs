@@ -295,7 +295,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 
             GetVelocity();
         }
-
+        
         public void OnPointerDown(PointerEventData eventData)
         {
             isPressing = true;

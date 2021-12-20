@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1488,7 +1488,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1409601194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 226c5379b57de37468d8622fe21c50f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 54aaa385a9b88e84e9d50b9804aaa24e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movementType: 0
@@ -1520,10 +1520,16 @@ MonoBehaviour:
   onTransitionEffects:
     m_PersistentCalls:
       m_Calls: []
-  onPanelCentered:
+  onPanelSelecting:
     m_PersistentCalls:
       m_Calls: []
   onPanelSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  onPanelCentering:
+    m_PersistentCalls:
+      m_Calls: []
+  onPanelCentered:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1409601197
