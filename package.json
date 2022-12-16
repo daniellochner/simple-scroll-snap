@@ -1,0 +1,15 @@
+{
+  "name": "com.daniellochner.simplescrollsnap",
+  "version": "2.0.0",
+  "displayName": "Simple Scroll Snap",
+  "description": "\"Simple Scroll-Snap\" is an elegantly designed, intuitive solution that allows for elements within a ScrollView to be snapped to, offering a wide range of customization options.",
+  "unity": "2019.1",
+  "documentationUrl": "https://github.com/daniellochner/simple-scroll-snap",
+  "dependencies": { },
+   "samples": [
+        {
+            "displayName": "Demos",
+            "path": "Samples~/Demos"
+        }
+	]
+}
