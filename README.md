@@ -27,3 +27,16 @@
 
 ## Help:
 In the event you are unable to find the information you are looking for or have found a bug, please raise an issue here or post a question in the [Discord server](https://discord.gg/sJysbdu).
+
+# Install package
+
+## Via Package manager
+Add from git URL:
+`https://github.com/krisrok/simple-scroll-snap.git`
+
+## Or via manifest.json:
+```
+"dependencies": {
+  "com.daniellochner.simplescrollsnap": "https://github.com/krisrok/simple-scroll-snap.git",
+  ...
+```
